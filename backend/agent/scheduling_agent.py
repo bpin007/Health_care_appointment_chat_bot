@@ -26,7 +26,7 @@ class SchedulingAgent:
     }
 
     FAQ_PATTERNS = [
-        r"\b(insurance|location|hours|parking|payment|policy|cancel|covid)\b",
+        r"\b(insurance|location|hours|parking|payment|policy|covid)\b",  # Removed "cancel"
         r"\b(what|how|where|when)\b.*\b(cost|price|bring|documents)\b",
     ]
 
@@ -74,41 +74,7 @@ class SchedulingAgent:
 
         memory = self.session_memory[session_id]
 
-        symptoms = [
-            "pain",
-            "hurt",
-            "injury",
-            "fever",
-            "cough",
-            "sick",
-            "ache",
-            "throat",
-            "rash",
-            "headache",
-        ]
-
-        illness_triggers = [
-            "doctor",
-            "clinic",
-            "appointment",
-            "book",
-            "medical",
-            "hospital",
-            "checkup",
-            "consult",
-        ]
-
-        MEDICAL_RELATED = symptoms + illness_triggers
-        if not any(w in text_l for w in MEDICAL_RELATED):
-            return self._msg(
-                "I can only assist with **medical appointments and health-related issues** 😊\n"
-                "Tell me if you're feeling unwell or want to consult a doctor."
-            )
-
-        # FAQ - highest priority
-
-        # Check for cancellation intent
-        # —— CANCEL FLOW ENTRY ——
+        # Check for cancellation intent FIRST (before FAQ)
         if "cancel" in text_l:
             # if user already has a booking in memory
             if memory.get("last_booking_id"):
@@ -125,6 +91,7 @@ class SchedulingAgent:
                 "Example:\n• APPT-1732829\n• ABC123"
             )
 
+        # FAQ detection (after cancellation check)
         if self._is_faq(text_l):
             return self._handle_faq(memory, text)
 
@@ -158,24 +125,32 @@ class SchedulingAgent:
             booking = self.booking_tool.get_booking_by_confirmation(code)
             if not booking:
                 return self._msg(
-                    "❌ I couldn’t find an active appointment with that code.\n"
+                    "❌ I couldn't find an active appointment with that code.\n"
                     "Please check your confirmation email."
                 )
 
             # Save which booking user wants to cancel
             memory["cancel_target"] = booking
-            if memory["state"] == "awaiting_cancel_code_confirm":
-                if "yes" in text_l:
-                    booking = memory["cancel_target"]
-                    result = self.booking_tool.cancel(booking["booking_id"])
-                    memory["cancel_target"] = None
-                    memory["last_booking_id"] = None
-                    memory["state"] = None
+            memory["state"] = "awaiting_cancel_code_confirm"
+            return self._msg(
+                f"📋 Found your appointment:\n\n"
+                f"📅 {booking.get('date')} at {booking.get('start_time')}\n"
+                f"👨‍⚕️ {booking.get('doctor_name', 'Doctor')}\n\n"
+                f"Are you sure you want to cancel? (yes/no)"
+            )
 
-                    return self._msg(
-                        "❌ Appointment cancelled successfully.\n"
-                        "If you’d like to rebook, just let me know!"
-                    )
+        if memory["state"] == "awaiting_cancel_code_confirm":
+            if "yes" in text_l:
+                booking = memory["cancel_target"]
+                result = self.booking_tool.cancel(booking["booking_id"])
+                memory["cancel_target"] = None
+                memory["last_booking_id"] = None
+                memory["state"] = None
+
+                return self._msg(
+                    "❌ Appointment cancelled successfully.\n"
+                    "If you'd like to rebook, just let me know!"
+                )
 
             memory["state"] = None
             memory["cancel_target"] = None
@@ -192,6 +167,16 @@ class SchedulingAgent:
 
         # 1️⃣ Capture Reason
         if memory["state"] == "awaiting_reason":
+            # Validate: Check if user provided actual information
+            if not self._is_valid_reason(text):
+                return self._msg(
+                    "I'd like to help! Could you tell me what brings you in?\n\n"
+                    "For example:\n"
+                    "• 'I have a headache'\n"
+                    "• 'I need a checkup'\n"
+                    "• 'Follow-up appointment'"
+                )
+            
             memory["reason"] = text
             memory["state"] = "awaiting_appointment_type"
             return self._suggest_appt_type(text)
@@ -201,7 +186,7 @@ class SchedulingAgent:
             # Allow "yes" to accept suggested type
             if any(
                 word in text_l
-                for word in ["yes", "y", "ok", "okay", "sure", "sounds good"]
+                for word in ["yes", "y", "ok", "okay", "sure", "sounds good", "fine", "perfect"]
             ):
                 apt_type = "consultation"  # Default suggested type
             else:
@@ -224,7 +209,13 @@ class SchedulingAgent:
         if memory["state"] == "awaiting_date":
             normalized = self._parse_date(text)
             if not normalized:
-                return self._msg("I didn't understand that date. Try: 'tomorrow'")
+                return self._msg(
+                    "I didn't understand that date. Please try:\n"
+                    "• tomorrow\n"
+                    "• next Monday\n"
+                    "• December 15\n"
+                    "• in 3 days"
+                )
 
             memory["preferred_date"] = normalized
             memory["state"] = "awaiting_time"
@@ -234,7 +225,12 @@ class SchedulingAgent:
         if memory["state"] == "awaiting_time":
             time_pref = self._parse_time(text_l)
             if not time_pref:
-                return self._msg("Please choose: Morning / Afternoon / Evening")
+                return self._msg(
+                    "Please choose a time of day:\n"
+                    "• Morning ☀️\n"
+                    "• Afternoon 🌤️\n"
+                    "• Evening 🌙"
+                )
 
             memory["preferred_time_of_day"] = time_pref
 
@@ -257,7 +253,11 @@ class SchedulingAgent:
             selected = self._pick_doctor(text, memory["doctors"])
             if not selected:
                 return self._msg(
-                    "Select a doctor by saying:\n• first\n• second\n• 1\n• Dr. Smith"
+                    "Please select a doctor by saying:\n"
+                    "• first\n"
+                    "• second\n"
+                    "• 1 or 2\n"
+                    "• Dr. Smith"
                 )
 
             memory["doctor"] = selected
@@ -280,7 +280,12 @@ class SchedulingAgent:
         if memory["state"] == "awaiting_slot":
             choice = self._pick_slot(text, memory["available_slots"])
             if not choice:
-                return self._msg("Select a slot:\n• 10:30\n• first\n• earliest\n• 1")
+                return self._msg(
+                    "Please select a time slot:\n"
+                    "• 10:30\n"
+                    "• first or earliest\n"
+                    "• 1, 2, 3..."
+                )
 
             memory["selected_slot"] = choice
             memory["state"] = "awaiting_name"
@@ -289,7 +294,10 @@ class SchedulingAgent:
         # 7️⃣ Name
         if memory["state"] == "awaiting_name":
             if len(text.split()) < 2:
-                return self._msg("Please provide your full name (first + last)")
+                return self._msg(
+                    "Please provide your full name (first and last name).\n"
+                    "Example: John Smith"
+                )
             memory["patient"]["name"] = text
             memory["state"] = "awaiting_phone"
             return self._msg("Great! What's your phone number?")
@@ -298,7 +306,9 @@ class SchedulingAgent:
         if memory["state"] == "awaiting_phone":
             if not self._valid_phone(text):
                 return self._msg(
-                    "That doesn't look like a valid phone number. Try again."
+                    "That doesn't look like a valid phone number.\n"
+                    "Please provide a 10-digit phone number.\n"
+                    "Example: 555-123-4567"
                 )
             memory["patient"]["phone"] = text
             memory["state"] = "awaiting_email"
@@ -307,7 +317,10 @@ class SchedulingAgent:
         # 9️⃣ Email
         if memory["state"] == "awaiting_email":
             if not self._valid_email(text):
-                return self._msg("That email looks invalid. Please try again.")
+                return self._msg(
+                    "That email looks invalid. Please try again.\n"
+                    "Example: john@example.com"
+                )
             memory["patient"]["email"] = text
             memory["state"] = "awaiting_confirm"
             return self._msg(self._summary(memory) + "\n\n✅ Confirm? (yes/no)")
@@ -376,7 +389,7 @@ class SchedulingAgent:
     async def _initial(self, text: str, text_l: str, memory: Dict) -> Dict[str, Any]:
         """Handle the first user message"""
 
-        # Greeting detection
+        # Greeting detection - don't advance state yet
         greetings = [
             "hi",
             "hello",
@@ -385,7 +398,11 @@ class SchedulingAgent:
             "good afternoon",
             "good evening",
         ]
-        if any(g in text_l for g in greetings):
+        
+        # Check if message is ONLY a greeting (no additional info)
+        is_pure_greeting = any(text_l.strip() == g or text_l.strip() == g + "!" for g in greetings)
+        
+        if is_pure_greeting:
             memory["state"] = "awaiting_reason"
             return self._msg(
                 "Hello 👋! I'm here to help you schedule an appointment.\n\n"
@@ -433,6 +450,30 @@ class SchedulingAgent:
             "I'm here to help you book an appointment 😊\n\n"
             "What brings you in today?"
         )
+
+    # =====================================================
+    # VALIDATION HELPERS
+    # =====================================================
+    def _is_valid_reason(self, text: str) -> bool:
+        """Check if user provided a valid reason (not just greeting/filler)"""
+        text_l = text.lower().strip()
+        
+        # Filter out pure greetings
+        greetings = ["hi", "hello", "hey", "yo", "sup"]
+        if text_l in greetings:
+            return False
+        
+        # Must be at least 3 characters and contain meaningful content
+        if len(text) < 3:
+            return False
+        
+        # Check for meaningful words
+        meaningful_patterns = [
+            r'\b(pain|hurt|sick|fever|cough|checkup|consultation|followup|exam)\b',
+            r'\b(need|want|schedule|book|appointment)\b',
+        ]
+        
+        return any(re.search(pattern, text_l) for pattern in meaningful_patterns) or len(text.split()) >= 3
 
     # =====================================================
     # FAQ HANDLING
