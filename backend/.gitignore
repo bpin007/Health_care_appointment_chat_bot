@@ -1,0 +1,92 @@
+# -----------------------------
+# Python
+# -----------------------------
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Bytecode
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+logs/
+*.log
+
+# Compiled
+dist/
+build/
+
+# -----------------------------
+# IDE / Editor files
+# -----------------------------
+
+# VSCode
+.vscode/
+
+# JetBrains (PyCharm)
+.idea/
+*.iml
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# -----------------------------
+# dotenv / config
+# -----------------------------
+.env
+.env.*
+*.secret
+secrets.json
+
+# Credentials
+private/
+keys/
+*.pem
+*.key
+*.crt
+
+# -----------------------------
+# FastAPI / Project
+# -----------------------------
+
+# Local cache
+.cache/
+__cache__/
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.cache/
+*.pytest_cache
+
+# Tools
+celerybeat-schedule
+instance/
+uploads/
+tmp/
+.vercel
+.env*.local

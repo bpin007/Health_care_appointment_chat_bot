@@ -1,0 +1,181 @@
+[
+  {
+    "doctor_id": 1,
+    "name": "Dr. Ashik Arya",
+    "specialization": "General Physician",
+    "rating": 4.7,
+    "working_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "working_hours": { "start": "09:00", "end": "17:00" },
+    "appointment_duration_minutes": 30
+  },
+  {
+    "doctor_id": 2,
+    "name": "Dr. Anushree Sharma",
+    "specialization": "Internal Medicine",
+    "rating": 4.9,
+    "working_days": ["Monday", "Wednesday", "Friday"],
+    "working_hours": { "start": "10:00", "end": "16:00" },
+    "appointment_duration_minutes": 30
+  },
+
+  {
+    "doctor_id": 3,
+    "name": "Dr. Rahul Kashyap",
+    "specialization": "Dermatologist",
+    "rating": 4.8,
+    "working_days": ["Monday", "Thursday", "Saturday"],
+    "working_hours": { "start": "10:30", "end": "17:30" },
+    "appointment_duration_minutes": 20
+  },
+  {
+    "doctor_id": 4,
+    "name": "Dr. Priya Nandini",
+    "specialization": "Dermatologist",
+    "rating": 4.9,
+    "working_days": ["Tuesday", "Wednesday", "Friday"],
+    "working_hours": { "start": "09:30", "end": "15:00" },
+    "appointment_duration_minutes": 25
+  },
+
+  {
+    "doctor_id": 5,
+    "name": "Dr. Harish Patil",
+    "specialization": "Orthopedic Surgeon",
+    "rating": 4.8,
+    "working_days": ["Monday", "Tuesday", "Thursday"],
+    "working_hours": { "start": "11:00", "end": "18:00" },
+    "appointment_duration_minutes": 30
+  },
+  {
+    "doctor_id": 6,
+    "name": "Dr. Vivek Rao",
+    "specialization": "Orthopedic Surgeon",
+    "rating": 4.6,
+    "working_days": ["Wednesday", "Friday", "Saturday"],
+    "working_hours": { "start": "09:00", "end": "14:00" },
+    "appointment_duration_minutes": 25
+  },
+
+  {
+    "doctor_id": 7,
+    "name": "Dr. Neha Kulkarni",
+    "specialization": "Pediatrician",
+    "rating": 4.9,
+    "working_days": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+    "working_hours": { "start": "09:30", "end": "17:00" },
+    "appointment_duration_minutes": 25
+  },
+  {
+    "doctor_id": 8,
+    "name": "Dr. Arjun Shetty",
+    "specialization": "Pediatrician",
+    "rating": 4.7,
+    "working_days": ["Friday", "Saturday"],
+    "working_hours": { "start": "10:00", "end": "17:30" },
+    "appointment_duration_minutes": 30
+  },
+
+  {
+    "doctor_id": 9,
+    "name": "Dr. Kavya Prasad",
+    "specialization": "Dentist",
+    "rating": 4.8,
+    "working_days": ["Monday", "Tuesday", "Friday", "Saturday"],
+    "working_hours": { "start": "11:00", "end": "19:00" },
+    "appointment_duration_minutes": 30
+  },
+  {
+    "doctor_id": 10,
+    "name": "Dr. Manish V",
+    "specialization": "Dentist",
+    "rating": 4.6,
+    "working_days": ["Wednesday", "Thursday"],
+    "working_hours": { "start": "13:00", "end": "20:00" },
+    "appointment_duration_minutes": 40
+  },
+
+  {
+    "doctor_id": 11,
+    "name": "Dr. Shruti R",
+    "specialization": "ENT Specialist",
+    "rating": 4.9,
+    "working_days": ["Monday", "Wednesday", "Friday"],
+    "working_hours": { "start": "09:30", "end": "16:30" },
+    "appointment_duration_minutes": 30
+  },
+  {
+    "doctor_id": 12,
+    "name": "Dr. Vishal Patwardhan",
+    "specialization": "ENT Specialist",
+    "rating": 4.7,
+    "working_days": ["Tuesday", "Thursday", "Saturday"],
+    "working_hours": { "start": "11:00", "end": "18:00" },
+    "appointment_duration_minutes": 25
+  },
+
+  {
+    "doctor_id": 13,
+    "name": "Dr. Deepa Raj",
+    "specialization": "Gynecologist",
+    "rating": 4.95,
+    "working_days": ["Monday", "Tuesday", "Thursday", "Friday"],
+    "working_hours": { "start": "10:30", "end": "18:30" },
+    "appointment_duration_minutes": 30
+  },
+  {
+    "doctor_id": 14,
+    "name": "Dr. Roshni P",
+    "specialization": "Gynecologist",
+    "rating": 4.8,
+    "working_days": ["Wednesday", "Saturday"],
+    "working_hours": { "start": "09:00", "end": "15:30" },
+    "appointment_duration_minutes": 25
+  },
+
+  {
+    "doctor_id": 15,
+    "name": "Dr. Akhil Shetty",
+    "specialization": "General Physician",
+    "rating": 4.6,
+    "working_days": ["Monday", "Tuesday", "Friday"],
+    "working_hours": { "start": "10:00", "end": "16:00" },
+    "appointment_duration_minutes": 30
+  },
+  {
+    "doctor_id": 17,
+    "name": "Dr. Ashwin Kumar",
+    "specialization": "Internal Medicine",
+    "rating": 4.8,
+    "working_days": ["Tuesday", "Thursday", "Saturday"],
+    "working_hours": { "start": "09:30", "end": "16:30" },
+    "appointment_duration_minutes": 30
+  },
+  {
+    "doctor_id": 18,
+    "name": "Dr. Meera Pandey",
+    "specialization": "Internal Medicine",
+    "rating": 4.7,
+    "working_days": ["Monday", "Wednesday", "Friday"],
+    "working_hours": { "start": "10:00", "end": "17:30" },
+    "appointment_duration_minutes": 30
+  },
+
+  {
+    "doctor_id": 19,
+    "name": "Dr. Aditya M",
+    "specialization": "Dermatologist",
+    "rating": 4.6,
+    "working_days": ["Tuesday", "Thursday"],
+    "working_hours": { "start": "11:00", "end": "17:00" },
+    "appointment_duration_minutes": 20
+  },
+  {
+    "doctor_id": 20,
+    "name": "Dr. Nithin Naik",
+    "specialization": "Orthopedic Surgeon",
+    "rating": 4.9,
+    "working_days": ["Monday", "Wednesday", "Friday"],
+    "working_hours": { "start": "10:00", "end": "18:00" },
+    "appointment_duration_minutes": 30
+  }
+]

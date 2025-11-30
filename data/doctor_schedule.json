@@ -1,0 +1,35 @@
+[
+  {
+    "doctor_id": 1,
+    "name": "Dr. Ashik Arya",
+    "specialization": "General Physician",
+    "working_days": ["Monday", "Tuesday", "Thursday", "Friday"],
+    "working_hours": {
+      "start": "09:00",
+      "end": "17:00"
+    },
+    "appointment_duration_minutes": 30
+  },
+  {
+    "doctor_id": 2,
+    "name": "Dr. Prajwal D B",
+    "specialization": "Dentist",
+    "working_days": ["Monday", "Wednesday", "Friday"],
+    "working_hours": {
+      "start": "10:00",
+      "end": "16:00"
+    },
+    "appointment_duration_minutes": 20
+  },
+  {
+    "doctor_id": 3,
+    "name": "Dr. Anushree Sharma",
+    "specialization": "Pediatrician",
+    "working_days": ["Tuesday", "Wednesday", "Thursday"],
+    "working_hours": {
+      "start": "08:30",
+      "end": "15:30"
+    },
+    "appointment_duration_minutes": 25
+  }
+]

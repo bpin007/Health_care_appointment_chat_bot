@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What are your clinic hours?",
+    "answer": "We are open Monday to Friday from 9:00 AM – 6:00 PM and Saturday from 10:00 AM – 2:00 PM."
+  },
+  {
+    "question": "Where is the clinic located?",
+    "answer": "The clinic is located at 123 Main Street, Bengaluru."
+  },
+  {
+    "question": "Do you accept insurance?",
+    "answer": "Yes, we accept major insurance providers. Please carry your insurance card."
+  },
+  {
+    "question": "Is parking available?",
+    "answer": "Yes, free parking is available near the entrance."
+  },
+  {
+    "question": "What documents should I bring?",
+    "answer": "Please bring an ID, previous medical records, and insurance details (if applicable)."
+  },
+  {
+    "question": "How do I cancel an appointment?",
+    "answer": "You may cancel an appointment at least 24 hours in advance via phone or our website."
+  }
+]

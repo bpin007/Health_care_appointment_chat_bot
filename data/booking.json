@@ -1,0 +1,67 @@
+[
+  {
+    "booking_id": "APPT-1764497798",
+    "confirmation_code": "0600F0",
+    "status": "confirmed",
+    "date": "2025-12-01",
+    "start_time": "10:00",
+    "appointment_type": "consultation",
+    "patient_name": "Bipin k",
+    "patient_email": "bipingowda7@gmail.com",
+    "patient_phone": "7090326602",
+    "reason": "i have fever",
+    "doctor_id": null
+  },
+  {
+    "booking_id": "APPT-1764503346",
+    "confirmation_code": "E94AB8",
+    "status": "confirmed",
+    "date": "2025-12-01",
+    "start_time": "09:00",
+    "appointment_type": "consultation",
+    "patient_name": "Bipin K",
+    "patient_email": "bipingowda7@gmail.com",
+    "patient_phone": "7090326602",
+    "reason": "i have headache",
+    "doctor_id": 1
+  },
+  {
+    "booking_id": "APPT-1764503623",
+    "confirmation_code": "3082F5",
+    "status": "confirmed",
+    "date": "2025-12-01",
+    "start_time": "10:00",
+    "appointment_type": "consultation",
+    "patient_name": "Bipin K",
+    "patient_email": "bipingowda7@gmail.com",
+    "patient_phone": "7090326602",
+    "reason": "i'm having fever",
+    "doctor_id": 1
+  },
+  {
+    "booking_id": "APPT-1764504706",
+    "confirmation_code": "15B206",
+    "status": "confirmed",
+    "date": "2025-12-01",
+    "start_time": "09:00",
+    "appointment_type": "consultation",
+    "patient_name": "Bipin K",
+    "patient_email": "bipingowda7@gmail.com",
+    "patient_phone": "7090326602",
+    "reason": "i have fever",
+    "doctor_id": 1
+  },
+  {
+    "booking_id": "APPT-1764504980",
+    "confirmation_code": "198E99",
+    "status": "cancelled",
+    "date": "2025-12-01",
+    "start_time": "10:00",
+    "appointment_type": "consultation",
+    "patient_name": "Bipin K",
+    "patient_email": "bipingowda7@gmail.com",
+    "patient_phone": "7090326602",
+    "reason": "i have fever",
+    "doctor_id": 1
+  }
+]
